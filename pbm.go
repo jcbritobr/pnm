@@ -1,10 +1,17 @@
 package pnm
 
-// PBMImage implements a Portable Bitmap format. A binary image
-// with values 0 or 1.
+// PBMImage implements a Portable bitmap. Its a binary
+// image, composed by 0 1 data
 type PBMImage struct {
-	magicNumber string
-	width       int
-	height      int
-	buffer      []byte
+	portableAnyMapImage
+}
+
+// Width returns the width of image
+func (p *PBMImage) Width() int {
+	return p.width
+}
+
+// Height returns the height of image
+func (p *PBMImage) Height() int {
+	return p.height
 }
