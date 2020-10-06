@@ -5,8 +5,6 @@
 ```go
 "math/rand"
 "os"
-"testing"
-
 "github.com/jcbritobr/pnm"
     
 func main() {
