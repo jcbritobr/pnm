@@ -11,7 +11,7 @@ func main() {
     image := pnm.NewPGMImage(800, 800, 255, pnm.PGMBinary)
     file, err := os.Create("testdata/sinimage.pgm")
     if err != nil {
-        t.Errorf("fail with %v", err)
+        panic(err)
     }
     encoder := pnm.NewEncoder(file)
 
@@ -24,7 +24,7 @@ func main() {
 
     err = encoder.Encode(image)
     if err != nil {
-        t.Errorf("fail to encode image %v", err)
+        panic(err)
     }
 }
 ```
