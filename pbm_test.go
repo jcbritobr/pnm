@@ -46,32 +46,32 @@ func TestPbmImageGettersShouldReturnCorrectly(t *testing.T) {
 		name    string
 		args    args
 		wmn     int64
-		wmv     int64
+		wmv     byte
 		wwidth  int64
 		wheight int64
 		mbuf    []byte
 	}{
-		{"Pbm image getter should return correctly A", args{PBMText, 1, 8, 8}, PBMText, 1, 8, 8, make([]byte, 64)},
-		{"Pbm image getter should return correctly B", args{PBMText, 1, 0, 0}, PBMText, 1, 0, 0, make([]byte, 0)},
+		{"Pbm image getter should return correctly A", args{PBMText, 1, 8, 8}, PBMText, 0, 8, 8, make([]byte, 64)},
+		{"Pbm image getter should return correctly B", args{PBMText, 1, 0, 0}, PBMText, 0, 0, 0, make([]byte, 0)},
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			image := NewPBMImage(tc.args.width, tc.args.height, PBMText)
 
-			if image.MagicNumber() != tc.args.mn {
+			if image.MagicNumber() != tc.wmn {
 				t.Errorf("MagicNumber() = %v want %v", image.MagicNumber(), tc.wmn)
 			}
 
-			if image.Value() != tc.args.mv {
+			if image.Value() != tc.wmv {
 				t.Errorf("Value() = %v want %v", image.Value(), tc.wmv)
 			}
 
-			if image.Width() != tc.args.width {
+			if image.Width() != tc.wwidth {
 				t.Errorf("Width() = %v want %v", image.Width(), tc.wwidth)
 			}
 
-			if image.Height() != tc.args.height {
+			if image.Height() != tc.wheight {
 				t.Errorf("Height() = %v want %v", image.Height(), tc.wheight)
 			}
 

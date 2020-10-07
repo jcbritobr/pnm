@@ -18,6 +18,7 @@ type Image interface {
 	Width() int64
 	Height() int64
 	Buffer() []byte
+	SetBuffer(buffer []byte)
 	Value() byte
 }
 
@@ -61,6 +62,11 @@ func (p *portableAnyMapImage) Height() int64 {
 // Buffer returns the buffer of image
 func (p *portableAnyMapImage) Buffer() []byte {
 	return p.buffer
+}
+
+// SetBuffer sets the buffer of image
+func (p *portableAnyMapImage) SetBuffer(buffer []byte) {
+	p.buffer = buffer
 }
 
 // Value returns the max value of image

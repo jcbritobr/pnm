@@ -16,11 +16,6 @@ func NewPBMImage(w, h, t int64) *PBMImage {
 	return image
 }
 
-// Value returns the max value of image
-func (p *PBMImage) Value() byte {
-	return 1
-}
-
 // String implements interface Stringer
 func (p *PBMImage) String() string {
 	return fmt.Sprintf("mn:%v mv: %v width:%v height:%v buffer:%v", p.magicNumber, p.Value(), p.width, p.height, p.buffer)
