@@ -90,8 +90,4 @@ func TestDecoder(t *testing.T) {
 		}
 
 	})
-
-	t.Run("Should fill image structs", func(t *testing.T) {
-		t.Errorf("Not implemented yet")
-	})
 }

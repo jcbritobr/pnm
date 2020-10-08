@@ -45,13 +45,8 @@ func (e *Encoder) Encode(image Image) error {
 			return err
 		}
 	} else {
-
 		for _, b := range image.Buffer() {
-			_, err := buffer.WriteString(fmt.Sprintf("%d", b))
-			if err != nil {
-				return err
-			}
-			_, err = buffer.WriteString(" ")
+			_, err := buffer.WriteString(fmt.Sprintf("%d ", b))
 			if err != nil {
 				return err
 			}

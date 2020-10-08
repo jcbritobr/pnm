@@ -43,4 +43,32 @@ func TestPGMImage(t *testing.T) {
 			t.Errorf("fail to decode image %v", err)
 		}
 	})
+
+	t.Run("Should decode and encode ppm image correctly", func(t *testing.T) {
+
+		var image pnm.PPMImage
+		file, err := os.Open("testdata/tree_1.ppm")
+		defer file.Close()
+		if err != nil {
+			t.Errorf("fail with %v", err)
+		}
+		decoder := pnm.NewDecoder(file, pnm.PPMBinary)
+		err = decoder.Decode(&image)
+
+		if err != nil {
+			t.Errorf("fail to decode image %v", err)
+		}
+
+		fe, err := os.Create("testdata/tree_2.ppm")
+		if err != nil {
+			t.Errorf("fail to create file %v", err)
+		}
+		defer fe.Close()
+		encoder := pnm.NewEncoder(fe)
+		err = encoder.Encode(&image)
+		if err != nil {
+			t.Errorf("Encode() = %v want %v", err, nil)
+		}
+
+	})
 }
