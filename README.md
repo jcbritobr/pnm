@@ -1,5 +1,18 @@
 # PNM
-### PNM is a collection of open image formats. This library supports ppm, pgm and pbm formats, also had a encoder and decoder implementations.
+PNM is a collection of open image formats. They are also refered as **portable anymap format(PNM)**. This library supports ppm(portable pixmap), pgm(portable graymap) and pbm(portable bitmap) formats. There is also a encoder and decoder implementations.
+
+* Description
+Each file starts with a two byte magic number (in ascii) that identifies the type of the file it is (PPM, PGM, PBM) and its encoding (**ascii/plain or binary/raw**). The magic number is a capital P followed by a single-digit number. Below is a explanation table with **ascii/binary** magic number formats.
+
+| **Type**        | **Magic Number** | **Extension** | **Color**                                                                    |
+|-----------------|------------------|---------------|------------------------------------------------------------------------------|
+| Portable Bitmap | P1/P4            | .pbm          | 0-1(White & Black)                                                           |
+| Portable GrayMap| P2/P5            | .pgm          | 0-255(gray scale), variable, black to white range                            |
+| Portable PixMap | P3/P6            | .ppm          | 16 777 216 (0-255 for each RGB channel), some support for 0-65535 per channel|
+
+<p></p>
+
+The ascii/plain format allow for human readability and easy transfer to other platforms. The binary/raw formats are more efficient in size but will be dependent of platforms.
 
 * Encoder usage
 ```go
@@ -28,8 +41,6 @@ func main() {
     }
 }
 ```
-
-![sin](images/synimage.png)
 
 * Decoder usage
 ```go
