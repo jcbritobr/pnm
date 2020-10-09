@@ -1,7 +1,7 @@
 # PNM
-PNM is a collection of open image formats. They are also refered as **portable anymap format(PNM)**. This library supports ppm(portable pixmap), pgm(portable graymap) and pbm(portable bitmap) formats. There is also a encoder and decoder implementations.
+PNM is a collection of open image formats. They are also refered as **portable anymap format(PNM)**. This library supports ppm(portable pixmap), pgm(portable graymap) and pbm(portable bitmap) formats. There is also an encoder and decoder implementations.
 
-* Description
+* Description \
 Each file starts with a two byte magic number (in ascii) that identifies the type of the file it is (PPM, PGM, PBM) and its encoding (**ascii/plain or binary/raw**). The magic number is a capital P followed by a single-digit number. Below is a explanation table with **ascii/binary** magic number formats.
 
 | **Type**        | **Magic Number** | **Extension** | **Color**                                                                    |
