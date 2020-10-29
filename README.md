@@ -1,5 +1,5 @@
 # PNM
-PNM is a collection of open image formats. They are also refered as **portable anymap format(PNM)**. This library supports ppm(portable pixmap), pgm(portable graymap) and pbm(portable bitmap) formats. There is also an encoder and decoder implementations.
+PNM is a collection of open image formats. They are also referred as **portable anymap format(PNM)**. This library supports ppm(portable pixmap), pgm(portable graymap) and pbm(portable bitmap) formats. There is also an encoder and decoder implementations.
 
 * Description \
 Each file starts with a two byte magic number (in ascii) that identifies the type of the file it is (PPM, PGM, PBM) and its encoding (**ascii/plain or binary/raw**). The magic number is a capital P followed by a single-digit number. Below is a explanation table with **ascii/binary** magic number formats.
@@ -16,10 +16,12 @@ The ascii/plain format allow for human readability and easy transfer to other pl
 
 * Encoder usage
 ```go
-"math/rand"
-"os"
-"github.com/jcbritobr/pnm"
-    
+import (
+    "math/rand"
+    "os"
+    "github.com/jcbritobr/pnm"
+)
+
 func main() {
     image := pnm.NewPGMImage(800, 800, 255, pnm.PGMBinary)
     file, err := os.Create("testdata/synimage.pgm")
@@ -44,10 +46,12 @@ func main() {
 
 * Decoder usage
 ```go
-"fmt"
-"os"
+import (
+    "fmt"
+    "os"
 
-"github.com/jcbritobr/pnm"
+    "github.com/jcbritobr/pnm"
+)
 
 func main() {
     var image pnm.PGMImage
@@ -60,6 +64,62 @@ func main() {
 
     if err != nil {
         panic(err)
+    }
+}
+```
+
+* Using ImageBuffer and color.Model (RGBA)
+```go
+import (
+    "os"
+    "github.com/jcbritobr/pnm"
+    "github.com/jcbritobr/pnm/buffer"
+    "github.com/jcbritobr/pnm/color"
+)
+
+func main() {
+    var image pnm.PPMImage
+    file, err := os.Open("testdata/tree_1.ppm")
+    if err != nil {
+        t.Errorf("fail with %v", err)
+    }
+    defer file.Close()
+
+    decoder := pnm.NewDecoder(file, pnm.PPMBinary)
+    err = decoder.Decode(&image)
+    if err != nil {
+        t.Errorf("fail to decode image %v", err)
+    }
+
+    imbuf := buffer.NewImageBuffer(image)
+    rgba := color.RGBA{}
+    newbuf := []byte{}
+    for {
+        n, _ := imbuf.Read(rgba[:])
+        if n <= 0 {
+            break
+        }
+        r, g, b, _ := rgba.RGBA()
+        r = 255 - r
+        g = 255 - g
+        b = 255 - b
+        newbuf = append(newbuf, r)
+        newbuf = append(newbuf, g)
+        newbuf = append(newbuf, b)
+    }
+
+    image.SetBuffer(newbuf)
+
+    fe, err := os.Create("testdata/tree_3.ppm")
+    if err != nil {
+        t.Errorf("fail to create file %v", err)
+    }
+    defer fe.Close()
+
+    encoder := pnm.NewEncoder(fe)
+    err = encoder.Encode(&image)
+    if err != nil {
+        t.Errorf("Encode() = %v want %v", err, nil)
     }
 }
 ```
